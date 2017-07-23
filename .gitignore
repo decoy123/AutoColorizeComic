@@ -1,4 +1,5 @@
 .idea
 data
+nohup.out
 src/sample
 src/__pycache__
