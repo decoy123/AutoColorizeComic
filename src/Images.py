@@ -22,20 +22,12 @@ class Images:
                 if entry.is_file():
                     filePathArray.append(entry.path)
         # Get binary of images.
-        allImages = np.array([])
+        allImages = []
         for filePath in filePathArray:
-            # image = None
-            # imageArray = None
-            # if colorMode == 'RGB':
-            #     image = Image.open(filePath).resize(targetSize)
-            #     imageArray = np.asarray(image.getdata(), 'uint8').reshape(targetSize[0], targetSize[1], 3)
-            # elif colorMode == 'L':
-            #     image = Image.open(filePath).convert('L').resize(targetSize)
-            #     imageArray = np.asarray(image.getdata(), 'uint8').reshape(targetSize[0], targetSize[1])
             image = Image.open(filePath).resize(targetSize)
             imageArray = np.asarray(image.getdata(), 'uint8').reshape(targetSize[0], targetSize[1], 3)
-            allImages = np.append(allImages, imageArray)
-        return allImages
+            allImages.append(imageArray)
+        return np.array(allImages)
 
     # Get image generator.
     def getImageGenerator(self, xArray, yArray, batchSize):
