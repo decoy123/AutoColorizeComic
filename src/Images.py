@@ -3,8 +3,9 @@ from PIL import Image
 import numpy as np
 import os
 
-class Images:
+class Images():
     def __init__(self):
+        super().__init__()
         self.imgDataGen = ImageDataGenerator(
             # featurewise_center=True,
             # samplewise_center=True,
@@ -22,10 +23,17 @@ class Images:
                 if entry.is_file():
                     filePathArray.append(entry.path)
         # Get binary of images.
+        colorDimension = None
+        if colorMode == 'RGB':
+            colorDimension = 3
+        elif colorMode == 'L':
+            colorDimension = 1
         allImages = []
         for filePath in filePathArray:
             image = Image.open(filePath).resize(targetSize)
-            imageArray = np.asarray(image.getdata(), 'uint8').reshape(targetSize[0], targetSize[1], 3)
+            if colorMode == 'L':
+                image = image.convert(colorMode)
+            imageArray = np.asarray(image.getdata(), 'uint8').reshape(targetSize[0], targetSize[1], colorDimension)
             allImages.append(imageArray)
         return np.array(allImages)
 
