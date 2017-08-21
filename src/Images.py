@@ -11,7 +11,7 @@ class Images():
             # samplewise_center=True,
             # featurewise_std_normalization=True,
             # samplewise_std_normalization=True,
-            rescale=1. / 255
+            # rescale=1. / 255
         )
 
     # Get image matrix.
@@ -40,4 +40,21 @@ class Images():
     # Get image generator.
     def getImageGenerator(self, xArray, yArray, batchSize):
         imageGenerator = self.imgDataGen.flow(xArray, yArray, shuffle=True, batch_size=batchSize)
+        return imageGenerator
+
+    # Get image generator from directory.
+    def getImageGeneratorFromDirectory(self, directory, targetSize, colorMode, batchSize):
+        color = None
+        if colorMode == 'RGB':
+            color = 'rgb'
+        elif colorMode == 'L':
+            color = 'grayscale'
+        imageGenerator = self.imgDataGen.flow_from_directory(
+            directory,
+            target_size=targetSize,
+            color_mode=color,
+            class_mode=None,
+            batch_size=batchSize,
+            shuffle=True
+        )
         return imageGenerator

@@ -1,5 +1,6 @@
 .idea
 data
-nohup.out
+nohup_fit.out
+nohup_predict.out
 src/sample
 src/__pycache__
